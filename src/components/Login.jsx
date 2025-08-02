@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import {
+  Card,
   Form,
   FormGroup,
   Label,
   Input,
   Button,
   FormFeedback,
+  CardBody,
 } from 'reactstrap';
 import { useNavigate } from 'react-router-dom';
 
@@ -90,7 +92,7 @@ export default function Login() {
         );
         if (user) {
           setForm(initialForm);
-          navigate('/main');
+          navigate('/success');
         } else {
           navigate('/error');
         }
@@ -98,6 +100,8 @@ export default function Login() {
   };
 
   return (
+    <Card>
+      <CardBody>
     <Form onSubmit={handleSubmit}>
       <FormGroup>
         <Label for="exampleEmail">Email</Label>
@@ -109,8 +113,9 @@ export default function Login() {
           onChange={handleChange}
           value={form.email}
           invalid={errors.email}
+          data-cy= "email-input"
         />
-        {errors.email && <FormFeedback>{errorMessages.email}</FormFeedback>}
+        {errors.email && <FormFeedback data-cy= "error-message">{errorMessages.email}</FormFeedback>}
       </FormGroup>
       <FormGroup>
         <Label for="examplePassword">Password</Label>
@@ -122,9 +127,10 @@ export default function Login() {
           onChange={handleChange}
           value={form.password}
           invalid={errors.password}
+          data-cy= "password-input"
         />
         {errors.password && (
-          <FormFeedback>{errorMessages.password}</FormFeedback>
+          <FormFeedback data-cy= "error-message">{errorMessages.password}</FormFeedback>
         )}
       </FormGroup>
       <FormGroup check>
@@ -136,15 +142,18 @@ export default function Login() {
           type="checkbox"
           onChange={handleChange}
           invalid={errors.terms}
+          data-cy= "terms-input"
         />
          I agree to terms of service and privacy policy
         </Label>
       </FormGroup>
       <FormGroup className="text-center p-4">
-        <Button color="primary" disabled={!isValid}>
+        <Button color="primary" disabled={!isValid} data-cy= "submit-button"> 
           Sign In
         </Button>
       </FormGroup>
     </Form>
+    </CardBody>
+    </Card>
   );
 }
