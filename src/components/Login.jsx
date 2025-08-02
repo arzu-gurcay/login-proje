@@ -7,7 +7,7 @@ import {
   Button,
   FormFeedback,
 } from 'reactstrap';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 import axios from 'axios';
 
@@ -31,7 +31,7 @@ export default function Login() {
     terms: false,
   });
 
-  const history = useHistory();
+  const navigate = useNavigate();
   const validateEmail = (email) => {
     return String(email)
       .toLowerCase()
@@ -39,7 +39,7 @@ export default function Login() {
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       );
   };
-  let regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&])[A-Za-z\d@.#$!%*?&]{8,15}$/;
+  let regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&])[A-Za-z\d@.#$!%*?&]{8,}$/;
   useEffect(() => {
     if (
       validateEmail(form.email) &&
@@ -86,13 +86,13 @@ export default function Login() {
       .get('https://6540a96145bedb25bfc247b4.mockapi.io/api/login')
       .then((res) => {
         const user = res.data.find(
-          (item) => item.password == form.password && item.email == form.email
+          (item) => item.password === form.password && item.email === form.email
         );
         if (user) {
           setForm(initialForm);
-          history.push('/main');
+          navigate('/main');
         } else {
-          history.push('/error');
+          navigate('/error');
         }
       });
   };
@@ -128,6 +128,7 @@ export default function Login() {
         )}
       </FormGroup>
       <FormGroup check>
+        <Label check>
         <Input
           id="terms"
           name="terms"
@@ -135,9 +136,8 @@ export default function Login() {
           type="checkbox"
           onChange={handleChange}
           invalid={errors.terms}
-        />{' '}
-        <Label htmlFor="terms" check>
-          I agree to terms of service and privacy policy
+        />
+         I agree to terms of service and privacy policy
         </Label>
       </FormGroup>
       <FormGroup className="text-center p-4">

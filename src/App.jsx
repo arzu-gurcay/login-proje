@@ -1,6 +1,8 @@
-import Login from './components/Login';
+import Login from './components/Login.jsx';
 import './App.css';
-import Success from './components/Success';
+import Success from './components/Success.jsx';
+
+
 function App() {
   return (
     <>
