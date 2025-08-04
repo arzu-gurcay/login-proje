@@ -83,20 +83,10 @@ export default function Login() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (!isValid) return;
-    axios
-      .get('https://6540a96145bedb25bfc247b4.mockapi.io/api/login')
-      .then((res) => {
-        const user = res.data.find(
-          (item) => item.password === form.password && item.email === form.email
-        );
-        if (user) {
-          setForm(initialForm);
-          navigate('/success');
-        } else {
-          navigate('/error');
-        }
-      });
+     navigate('/success');
+      
+    if (isValid) return;
+      
   };
 
   return (
